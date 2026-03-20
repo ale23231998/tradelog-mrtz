@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="TradeLogMRTZ">
 <meta name="theme-color" content="#0a0a0f">
@@ -267,10 +267,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 // ── CONFIG ─────────────────────────────────────────────────────────────────
-const GH_TOKEN = "";
 const GH_OWNER = "ale23231998";
 const GH_REPO  = "tradelog-mrtz";
 const GH_API   = "https://api.github.com";
+
+// ── CORRECCIÓN: getToken() lee el token guardado en localStorage ───────────
+function getToken() {
+  return localStorage.getItem("tradelog_gh_token") || "";
+}
 
 // ── GitHub DB helpers ──────────────────────────────────────────────────────
 function ghPath(username) { return "data/" + username + ".json"; }
@@ -286,8 +290,9 @@ async function ghRead(username) {
 
 async function ghWrite(username, trades, sha) {
   const url = GH_API+"/repos/"+GH_OWNER+"/"+GH_REPO+"/contents/"+ghPath(username);
+  // CORRECCIÓN: usar getToken() en lugar de la constante vacía GH_TOKEN
   const body = { message: "trades:"+username+":"+Date.now(), content: btoa(unescape(encodeURIComponent(JSON.stringify({trades})))), ...(sha ? {sha} : {}) };
-  const r = await fetch(url, { method:"PUT", headers:{ Authorization:"token "+GH_TOKEN, Accept:"application/vnd.github.v3+json", "Content-Type":"application/json" }, body: JSON.stringify(body) });
+  const r = await fetch(url, { method:"PUT", headers:{ Authorization:"token "+getToken(), Accept:"application/vnd.github.v3+json", "Content-Type":"application/json" }, body: JSON.stringify(body) });
   if (!r.ok) throw new Error("GitHub write error: " + r.status);
   const d = await r.json();
   return d.content.sha;
@@ -301,7 +306,6 @@ let _trades      = [];
 let _sha         = null;
 let pendingImg   = null;
 let chartInst    = null;
-
 
 function saveToken() {
   const t = document.getElementById("token-input").value.trim();
@@ -328,7 +332,6 @@ function setSyncStatus(state, text){
 }
 
 async function init() {
-  // Check if token is configured
   if (!getToken()) {
     document.getElementById("loading").classList.add("hidden");
     document.getElementById("token-screen").style.display = "flex";
