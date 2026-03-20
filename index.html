@@ -3,8 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,8 +16,6 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;max-width:480px;margin:0 auto;padding-bottom:90px;}
 .mono{font-family:'Space Mono',monospace;}
-
-/* AUTH */
 #auth-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;}
 .auth-logo{width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:20px;}
 .auth-title{font-size:26px;font-weight:600;letter-spacing:-0.5px;margin-bottom:6px;}
@@ -37,37 +33,26 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .auth-input::placeholder{color:var(--text3);}
 .auth-btn{width:100%;padding:13px;background:var(--accent);border:none;border-radius:var(--radius-sm);color:white;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:4px;transition:opacity 0.2s;}
 .auth-btn:active{opacity:0.8;}
-
-/* GOOGLE BUTTON */
-.google-btn{width:100%;padding:13px;background:white;border:1px solid rgba(255,255,255,0.2);border-radius:var(--radius-sm);color:#1a1a2e;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:12px;display:flex;align-items:center;justify-content:center;gap:10px;transition:opacity 0.2s;}
-.google-btn:active{opacity:0.8;}
-.google-btn svg{width:20px;height:20px;flex-shrink:0;}
-.divider{display:flex;align-items:center;gap:10px;margin:16px 0;}
-.divider-line{flex:1;height:1px;background:var(--border);}
-.divider-text{font-size:12px;color:var(--text3);}
-
 .auth-msg{font-size:13px;padding:10px 14px;border-radius:var(--radius-sm);margin-top:12px;display:none;}
 .auth-msg.err{background:var(--red-dim);color:var(--red);border:1px solid rgba(255,68,68,0.2);}
 .auth-msg.ok{background:var(--green-dim);color:var(--green);border:1px solid rgba(0,230,118,0.2);}
-
 .users-section{margin-top:20px;width:100%;}
 .users-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;text-align:center;}
 .user-chip{display:inline-flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:6px 14px 6px 8px;margin:4px;cursor:pointer;transition:border-color 0.2s;}
 .user-chip:hover{border-color:var(--accent2);}
 .user-avatar{width:24px;height:24px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:white;}
-.user-avatar img{width:24px;height:24px;border-radius:50%;object-fit:cover;}
 .user-chip-name{font-size:13px;color:var(--text2);}
-
-/* APP */
 #app{display:none;}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 16px 0;margin-bottom:4px;}
 .topbar-user{display:flex;align-items:center;gap:10px;}
-.topbar-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:white;overflow:hidden;}
-.topbar-avatar img{width:34px;height:34px;border-radius:50%;object-fit:cover;}
+.topbar-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:white;}
 .topbar-name{font-size:14px;font-weight:500;}
 .topbar-meta{font-size:12px;color:var(--text3);}
-.logout-btn{padding:7px 14px;border-radius:20px;border:1px solid var(--border);background:none;color:var(--text3);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;transition:all 0.2s;}
-.logout-btn:hover{color:var(--red);border-color:rgba(255,68,68,0.3);}
+.sync-status{font-size:11px;padding:2px 8px;border-radius:20px;margin-left:6px;}
+.sync-ok{background:var(--green-dim);color:var(--green);}
+.sync-err{background:var(--red-dim);color:var(--red);}
+.sync-ing{background:var(--blue-dim);color:var(--blue);}
+.logout-btn{padding:7px 14px;border-radius:20px;border:1px solid var(--border);background:none;color:var(--text3);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;}
 .nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:rgba(10,10,15,0.95);backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;z-index:100;padding:8px 0 max(8px,env(safe-area-inset-bottom));}
 .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 0;cursor:pointer;background:none;border:none;color:var(--text3);font-family:'DM Sans',sans-serif;font-size:11px;transition:color 0.2s;}
 .nav-btn.active{color:var(--accent2);}
@@ -116,7 +101,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .img-upload-area:hover{border-color:var(--accent2);}
 .img-preview-container{position:relative;display:inline-block;margin-top:10px;}
 .img-preview{max-height:120px;border-radius:var(--radius-sm);display:block;}
-.img-remove{position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;background:var(--red);border:none;color:white;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;}
+.img-remove{position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;background:var(--red);border:none;color:white;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .flash{font-size:13px;padding:10px 14px;border-radius:var(--radius-sm);margin-bottom:12px;display:none;}
 .flash.ok{background:var(--green-dim);color:var(--green);border:1px solid rgba(0,230,118,0.2);}
 .flash.err{background:var(--red-dim);color:var(--red);border:1px solid rgba(255,68,68,0.2);}
@@ -125,7 +110,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .cancel-edit{background:none;border:none;color:var(--text3);font-size:13px;cursor:pointer;text-decoration:underline;}
 .io-row{display:flex;gap:8px;margin-bottom:12px;}
 .io-btn{flex:1;padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg2);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:border-color 0.2s;}
-.io-btn:active{border-color:var(--accent2);}
 .trade-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:8px;}
 .trade-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
 .trade-date{font-size:12px;color:var(--text3);font-family:'Space Mono',monospace;}
@@ -140,7 +124,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .trade-notes{font-size:12px;color:var(--text3);margin-top:6px;border-top:1px solid var(--border);padding-top:6px;}
 .trade-thumb{width:48px;height:36px;object-fit:cover;border-radius:4px;margin-top:6px;cursor:pointer;}
 .trade-actions{display:flex;gap:8px;margin-top:10px;border-top:1px solid var(--border);padding-top:10px;}
-.action-btn{flex:1;padding:8px;border-radius:var(--radius-sm);border:1px solid var(--border);background:none;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;color:var(--text2);transition:all 0.2s;}
+.action-btn{flex:1;padding:8px;border-radius:var(--radius-sm);border:1px solid var(--border);background:none;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;color:var(--text2);}
 .action-btn.edit{color:var(--blue);border-color:rgba(68,136,255,0.3);background:var(--blue-dim);}
 .action-btn.del{color:var(--red);border-color:rgba(255,68,68,0.3);background:var(--red-dim);}
 .empty{text-align:center;padding:48px 20px;color:var(--text3);}
@@ -158,13 +142,24 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 </head>
 <body>
 
-<!-- LOADING -->
 <div class="loading-overlay" id="loading">
   <div class="spinner"></div>
   <div style="font-size:14px;color:var(--text3);">Cargando TradeLogMRTZ...</div>
 </div>
 
-<!-- AUTH -->
+<div id="token-screen" style="display:none;min-height:100vh;align-items:center;justify-content:center;padding:32px 24px;flex-direction:column;">
+  <div style="font-size:28px;margin-bottom:16px;">🔑</div>
+  <div style="font-size:20px;font-weight:600;margin-bottom:8px;">Configuracion inicial</div>
+  <div style="font-size:13px;color:var(--text2);margin-bottom:24px;text-align:center;">Esta configuracion se guarda solo en tu dispositivo y nunca se sube a ningun servidor.</div>
+  <div style="width:100%;max-width:400px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;">
+    <div style="font-size:12px;color:var(--text2);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.4px;">GitHub Personal Access Token</div>
+    <input type="password" id="token-input" style="width:100%;padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:monospace;font-size:13px;outline:none;margin-bottom:12px;" placeholder="ghp_...">
+    <div style="font-size:11px;color:var(--text3);margin-bottom:16px;">Crea un token en github.com/settings/tokens con scope <strong style="color:var(--text2)">repo</strong></div>
+    <button onclick="saveToken()" style="width:100%;padding:13px;background:var(--accent);border:none;border-radius:var(--radius-sm);color:white;font-family:DM Sans,sans-serif;font-size:15px;font-weight:600;cursor:pointer;">Guardar y continuar</button>
+    <div id="token-msg" style="font-size:13px;margin-top:10px;color:var(--red);display:none;"></div>
+  </div>
+</div>
+
 <div id="auth-screen" style="display:none;">
   <div class="auth-logo">📈</div>
   <div class="auth-title">TradeLogMRTZ</div>
@@ -174,51 +169,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <button class="auth-tab active" onclick="switchAuthTab('login')">Iniciar sesion</button>
       <button class="auth-tab" onclick="switchAuthTab('register')">Crear cuenta</button>
     </div>
-    <!-- LOGIN -->
     <div class="auth-form active" id="form-login">
-      <button class="google-btn" onclick="loginWithGoogle()">
-        <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-        Continuar con Google
-      </button>
-      <div class="divider"><div class="divider-line"></div><div class="divider-text">o con usuario</div><div class="divider-line"></div></div>
-      <div class="auth-field">
-        <label class="auth-label">Usuario</label>
-        <input type="text" id="login-user" class="auth-input" placeholder="Tu usuario" autocomplete="username">
-      </div>
-      <div class="auth-field">
-        <label class="auth-label">Contrasena</label>
-        <input type="password" id="login-pass" class="auth-input" placeholder="Tu contrasena" autocomplete="current-password">
-      </div>
+      <div class="auth-field"><label class="auth-label">Usuario</label><input type="text" id="login-user" class="auth-input" placeholder="Tu usuario" autocomplete="username"></div>
+      <div class="auth-field"><label class="auth-label">Contrasena</label><input type="password" id="login-pass" class="auth-input" placeholder="Tu contrasena" autocomplete="current-password"></div>
       <button class="auth-btn" onclick="doLogin()">Entrar</button>
       <div class="auth-msg" id="login-msg"></div>
     </div>
-    <!-- REGISTER -->
     <div class="auth-form" id="form-register">
-      <button class="google-btn" onclick="loginWithGoogle()">
-        <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-        Registrarse con Google
-      </button>
-      <div class="divider"><div class="divider-line"></div><div class="divider-text">o crear cuenta</div><div class="divider-line"></div></div>
-      <div class="auth-field">
-        <label class="auth-label">Nombre</label>
-        <input type="text" id="reg-name" class="auth-input" placeholder="Tu nombre">
-      </div>
-      <div class="auth-field">
-        <label class="auth-label">Usuario</label>
-        <input type="text" id="reg-user" class="auth-input" placeholder="Elige un usuario" autocomplete="username">
-      </div>
-      <div class="auth-field">
-        <label class="auth-label">Gmail (opcional)</label>
-        <input type="email" id="reg-email" class="auth-input" placeholder="tu@gmail.com">
-      </div>
-      <div class="auth-field">
-        <label class="auth-label">Contrasena</label>
-        <input type="password" id="reg-pass" class="auth-input" placeholder="Minimo 4 caracteres" autocomplete="new-password">
-      </div>
-      <div class="auth-field">
-        <label class="auth-label">Confirmar contrasena</label>
-        <input type="password" id="reg-pass2" class="auth-input" placeholder="Repeti la contrasena" autocomplete="new-password">
-      </div>
+      <div class="auth-field"><label class="auth-label">Nombre</label><input type="text" id="reg-name" class="auth-input" placeholder="Tu nombre"></div>
+      <div class="auth-field"><label class="auth-label">Usuario</label><input type="text" id="reg-user" class="auth-input" placeholder="Elige un usuario" autocomplete="username"></div>
+      <div class="auth-field"><label class="auth-label">Gmail (opcional)</label><input type="email" id="reg-email" class="auth-input" placeholder="tu@gmail.com"></div>
+      <div class="auth-field"><label class="auth-label">Contrasena</label><input type="password" id="reg-pass" class="auth-input" placeholder="Minimo 4 caracteres" autocomplete="new-password"></div>
+      <div class="auth-field"><label class="auth-label">Confirmar contrasena</label><input type="password" id="reg-pass2" class="auth-input" placeholder="Repeti la contrasena" autocomplete="new-password"></div>
       <button class="auth-btn" onclick="doRegister()">Crear cuenta</button>
       <div class="auth-msg" id="reg-msg"></div>
     </div>
@@ -229,26 +191,28 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </div>
 </div>
 
-<!-- APP -->
 <div id="app">
   <div class="topbar">
     <div class="topbar-user">
       <div class="topbar-avatar" id="topbar-avatar">A</div>
       <div>
-        <div class="topbar-name" id="topbar-name">Usuario</div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div class="topbar-name" id="topbar-name">Usuario</div>
+          <span class="sync-status" id="sync-status"></span>
+        </div>
         <div class="topbar-meta" id="topbar-meta">0 trades</div>
       </div>
     </div>
     <button class="logout-btn" onclick="doLogout()">Salir</button>
   </div>
-  <!-- DASHBOARD -->
+
   <div id="page-dash" class="page active">
     <div class="page-header" style="margin-top:12px;"><h1>Dashboard</h1><p id="dash-subtitle">Cargando...</p></div>
     <div class="stats-grid" id="stats-grid"></div>
     <div class="session-row" id="session-row"></div>
     <div class="card"><div class="stat-label" style="margin-bottom:10px;">P&L acumulado</div><div class="chart-wrap"><canvas id="chart"></canvas></div></div>
   </div>
-  <!-- NUEVO TRADE -->
+
   <div id="page-add" class="page">
     <div class="page-header" style="margin-top:12px;"><h1 id="form-title">Nuevo trade</h1></div>
     <div id="flash" class="flash"></div>
@@ -275,13 +239,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="form-group"><label class="form-label">Captura</label>
       <div class="img-upload-area" onclick="document.getElementById('f-img').click()">
         <div id="img-placeholder">Tocar para adjuntar captura</div>
-        <div id="img-preview-wrap" style="display:none;"><div class="img-preview-container"><img id="img-preview" class="img-preview"><button class="img-remove" onclick="event.stopPropagation();clearImg()">×</button></div></div>
+        <div id="img-preview-wrap" style="display:none;"><div class="img-preview-container"><img id="img-preview" class="img-preview"><button class="img-remove" onclick="event.stopPropagation();clearImg()">x</button></div></div>
       </div>
       <input type="file" id="f-img" accept="image/*" style="display:none;" onchange="handleImg(event)">
     </div>
     <button class="btn-submit" id="btn-submit" onclick="submitTrade()">Agregar trade</button>
   </div>
-  <!-- HISTORIAL -->
+
   <div id="page-list" class="page">
     <div class="page-header" style="margin-top:12px;"><h1>Historial</h1></div>
     <div class="io-row">
@@ -290,6 +254,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     </div>
     <div id="trades-list"></div>
   </div>
+
   <nav class="nav">
     <button class="nav-btn active" onclick="showPage('dash',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</button>
     <button class="nav-btn" onclick="showPage('add',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>Nuevo</button>
@@ -297,375 +262,330 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </nav>
 </div>
 
-<div class="modal-overlay" id="img-modal" onclick="closeModal()"><button class="modal-close">×</button><img id="modal-img"></div>
-
-<!-- FIREBASE SDK -->
-<script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCbDOWiTDcybpMl5rcm1oKGMmv56SQxsR8",
-  authDomain: "tradelog-mrtz.firebaseapp.com",
-  projectId: "tradelog-mrtz",
-  storageBucket: "tradelog-mrtz.firebasestorage.app",
-  messagingSenderId: "373360108545",
-  appId: "1:373360108545:web:ee3807857734cdabe4cc00"
-};
-
-const app      = initializeApp(firebaseConfig);
-const auth     = getAuth(app);
-const provider = new GoogleAuthProvider();
-
-// Expose to global scope
-window._fbAuth     = auth;
-window._fbProvider = provider;
-window._fbSignInWithPopup  = signInWithPopup;
-window._fbSignOut          = signOut;
-window._fbOnAuthStateChanged = onAuthStateChanged;
-
-// Listen for auth state
-onAuthStateChanged(auth, user => {
-  document.getElementById('loading').classList.add('hidden');
-  if (user) {
-    // Google user logged in
-    window._googleUser = user;
-    startSession('google_' + user.uid, user.displayName || user.email, user.photoURL, user.email);
-  } else {
-    window._googleUser = null;
-    // Check local session
-    const saved = localStorage.getItem('tradelog_session');
-    if (saved) {
-      const users = getLocalUsers();
-      if (users[saved]) {
-        startSession(saved, users[saved].name, null, users[saved].email || '');
-        return;
-      }
-    }
-    showAuthScreen();
-  }
-});
-
-window.loginWithGoogle = async function() {
-  try {
-    await window._fbSignInWithPopup(auth, provider);
-  } catch(e) {
-    authMsg('login-msg', 'Error al iniciar con Google: ' + e.message, 'err');
-  }
-};
-
-window.doLogout = async function() {
-  if (window._googleUser) {
-    await window._fbSignOut(auth);
-  } else {
-    localStorage.removeItem('tradelog_session');
-    window._currentUser = null;
-    window._trades = [];
-  }
-};
-</script>
+<div class="modal-overlay" id="img-modal" onclick="closeModal()"><button class="modal-close">x</button><img id="modal-img"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-// ─── LOCAL AUTH ───────────────────────────────────────────────────────────
-const USERS_KEY   = 'tradelog_users';
-const SESSION_KEY = 'tradelog_session';
-window._currentUser = null;
-window._trades = [];
-let pendingImg  = null;
-let chartInst   = null;
+// ── CONFIG ─────────────────────────────────────────────────────────────────
+const GH_TOKEN = "";
+const GH_OWNER = "ale23231998";
+const GH_REPO  = "tradelog-mrtz";
+const GH_API   = "https://api.github.com";
 
-function getLocalUsers() {
-  try { return JSON.parse(localStorage.getItem(USERS_KEY) || '{}'); } catch(e) { return {}; }
-}
-function saveLocalUsers(u) { localStorage.setItem(USERS_KEY, JSON.stringify(u)); }
+// ── GitHub DB helpers ──────────────────────────────────────────────────────
+function ghPath(username) { return "data/" + username + ".json"; }
 
-function hashPass(p) {
-  let h = 0;
-  for (let i = 0; i < p.length; i++) h = Math.imul(31, h) + p.charCodeAt(i) | 0;
-  return 'h' + Math.abs(h).toString(36);
-}
-
-function tradesKey(uid) { return 'tradelog_data_' + uid; }
-function loadUserTrades(uid) {
-  try { return JSON.parse(localStorage.getItem(tradesKey(uid)) || '[]'); } catch(e) { return []; }
-}
-function saveUserTrades(uid, data) { localStorage.setItem(tradesKey(uid), JSON.stringify(data)); }
-
-function authMsg(id, msg, type) {
-  const el = document.getElementById(id);
-  el.textContent = msg; el.className = 'auth-msg ' + type; el.style.display = 'block';
-  setTimeout(() => el.style.display = 'none', 3500);
+async function ghRead(username) {
+  const url = GH_API+"/repos/"+GH_OWNER+"/"+GH_REPO+"/contents/"+ghPath(username);
+  const r = await fetch(url, { headers: { Authorization: "token "+getToken(), Accept: "application/vnd.github.v3+json" }});
+  if (r.status === 404) return { trades: [], sha: null };
+  const d = await r.json();
+  const content = JSON.parse(atob(d.content.replace(/\n/g,'')));
+  return { trades: content.trades || [], sha: d.sha };
 }
 
-function switchAuthTab(tab) {
-  document.querySelectorAll('.auth-tab').forEach((b,i) => b.classList.toggle('active',(i===0&&tab==='login')||(i===1&&tab==='register')));
-  document.getElementById('form-login').classList.toggle('active', tab==='login');
-  document.getElementById('form-register').classList.toggle('active', tab==='register');
+async function ghWrite(username, trades, sha) {
+  const url = GH_API+"/repos/"+GH_OWNER+"/"+GH_REPO+"/contents/"+ghPath(username);
+  const body = { message: "trades:"+username+":"+Date.now(), content: btoa(unescape(encodeURIComponent(JSON.stringify({trades})))), ...(sha ? {sha} : {}) };
+  const r = await fetch(url, { method:"PUT", headers:{ Authorization:"token "+GH_TOKEN, Accept:"application/vnd.github.v3+json", "Content-Type":"application/json" }, body: JSON.stringify(body) });
+  if (!r.ok) throw new Error("GitHub write error: " + r.status);
+  const d = await r.json();
+  return d.content.sha;
 }
 
-function doRegister() {
-  const name  = document.getElementById('reg-name').value.trim();
-  const user  = document.getElementById('reg-user').value.trim().toLowerCase();
-  const email = document.getElementById('reg-email').value.trim();
-  const pass  = document.getElementById('reg-pass').value;
-  const pass2 = document.getElementById('reg-pass2').value;
-  if (!name||!user||!pass) return authMsg('reg-msg','Completa todos los campos.','err');
-  if (pass.length < 4)     return authMsg('reg-msg','Minimo 4 caracteres.','err');
-  if (pass !== pass2)      return authMsg('reg-msg','Las contrasenas no coinciden.','err');
-  if (!/^[a-z0-9_]+$/.test(user)) return authMsg('reg-msg','Usuario: solo letras, numeros y _.','err');
-  if (email && !/^[^@]+@[^@]+\.[^@]+$/.test(email)) return authMsg('reg-msg','Email invalido.','err');
-  const users = getLocalUsers();
-  if (users[user]) return authMsg('reg-msg','Ese usuario ya existe.','err');
-  users[user] = { name, email: email||'', hash: hashPass(pass), created: new Date().toISOString() };
-  saveLocalUsers(users);
-  authMsg('reg-msg','Cuenta creada!','ok');
-  renderUserChips();
-  setTimeout(() => switchAuthTab('login'), 1500);
-}
+// ── Local auth ─────────────────────────────────────────────────────────────
+const USERS_KEY   = "tradelog_users";
+const SESSION_KEY = "tradelog_session";
+let _currentUser = null;
+let _trades      = [];
+let _sha         = null;
+let pendingImg   = null;
+let chartInst    = null;
 
-function doLogin() {
-  const user = document.getElementById('login-user').value.trim().toLowerCase();
-  const pass = document.getElementById('login-pass').value;
-  if (!user||!pass) return authMsg('login-msg','Ingresa usuario y contrasena.','err');
-  const users = getLocalUsers();
-  if (!users[user])                        return authMsg('login-msg','Usuario no encontrado.','err');
-  if (users[user].hash !== hashPass(pass)) return authMsg('login-msg','Contrasena incorrecta.','err');
-  localStorage.setItem(SESSION_KEY, user);
-  startSession(user, users[user].name, null, users[user].email||'');
-}
 
-function quickLogin(u) {
-  document.getElementById('login-user').value = u;
-  document.getElementById('login-pass').focus();
-  switchAuthTab('login');
-}
-
-function showAuthScreen() {
-  document.getElementById('auth-screen').style.display = 'flex';
-  document.getElementById('app').style.display = 'none';
-  renderUserChips();
-}
-
-function startSession(uid, displayName, photoURL, email) {
-  window._currentUser = uid;
-  window._trades = loadUserTrades(uid);
-  document.getElementById('auth-screen').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
-
-  const avatarEl = document.getElementById('topbar-avatar');
-  if (photoURL) {
-    avatarEl.innerHTML = '<img src="'+photoURL+'" alt="">';
-  } else {
-    avatarEl.textContent = displayName.charAt(0).toUpperCase();
+function saveToken() {
+  const t = document.getElementById("token-input").value.trim();
+  if (!t.startsWith("ghp_") && !t.startsWith("github_pat_")) {
+    document.getElementById("token-msg").textContent = "Token invalido. Debe empezar con ghp_";
+    document.getElementById("token-msg").style.display = "block";
+    return;
   }
-  document.getElementById('topbar-name').textContent = displayName;
-  document.getElementById('topbar-meta').textContent = email || window._trades.length + ' trades';
-  document.getElementById('f-date').value = new Date().toISOString().slice(0,10);
-  showPage('dash', document.querySelector('.nav-btn'));
+  localStorage.setItem("tradelog_gh_token", t);
+  document.getElementById("token-screen").style.display = "none";
+  document.getElementById("loading").classList.remove("hidden");
+  showAuthScreen();
+  document.getElementById("loading").classList.add("hidden");
 }
 
-function renderUserChips() {
-  const users = getLocalUsers();
-  const keys  = Object.keys(users);
-  const sec   = document.getElementById('users-section');
-  if (!keys.length) { sec.style.display='none'; return; }
-  sec.style.display = 'block';
-  document.getElementById('users-chips').innerHTML = keys.map(u =>
-    `<span class="user-chip" onclick="quickLogin('${u}')">
-      <span class="user-avatar">${users[u].name.charAt(0).toUpperCase()}</span>
-      <span class="user-chip-name">${users[u].name}${users[u].email?'<br><small style="font-size:10px;color:var(--text3);">'+users[u].email+'</small>':''}</span>
-    </span>`).join('');
+function getLocalUsers() { try{return JSON.parse(localStorage.getItem(USERS_KEY)||"{}");}catch(e){return{};} }
+function saveLocalUsers(u){ localStorage.setItem(USERS_KEY, JSON.stringify(u)); }
+function hashPass(p){ let h=0; for(let i=0;i<p.length;i++) h=Math.imul(31,h)+p.charCodeAt(i)|0; return "h"+Math.abs(h).toString(36); }
+
+function setSyncStatus(state, text){
+  const el = document.getElementById("sync-status");
+  el.className = "sync-status sync-"+state;
+  el.textContent = text;
 }
 
-// ─── NAVIGATION ───────────────────────────────────────────────────────────
-function showPage(id, btn) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  if (btn) btn.classList.add('active');
-  if (id==='dash') renderDash();
-  if (id==='list') renderList();
+async function init() {
+  // Check if token is configured
+  if (!getToken()) {
+    document.getElementById("loading").classList.add("hidden");
+    document.getElementById("token-screen").style.display = "flex";
+    return;
+  }
+  const saved = localStorage.getItem(SESSION_KEY);
+  if (saved) {
+    const users = getLocalUsers();
+    if (users[saved]) {
+      setSyncStatus("ing","cargando...");
+      try {
+        const result = await ghRead(saved);
+        _trades = result.trades;
+        _sha    = result.sha;
+        setSyncStatus("ok","☁ guardado");
+      } catch(e) {
+        _trades = JSON.parse(localStorage.getItem("tradelog_data_"+saved)||"[]");
+        setSyncStatus("err","sin conexion");
+      }
+      _currentUser = saved;
+      startSession(saved, users[saved].name, users[saved].email||"");
+      return;
+    }
+  }
+  document.getElementById("loading").classList.add("hidden");
+  showAuthScreen();
 }
 
-// ─── FORM ─────────────────────────────────────────────────────────────────
-function setToggle(group, btn) {
-  btn.closest('.toggle-group').querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('f-'+group).value = btn.dataset.val;
-}
-function setResult(btn) {
-  document.querySelectorAll('.result-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('f-result').value = btn.dataset.val;
-}
-function setToggleVal(group, val) {
-  const h = document.getElementById('f-'+group); h.value = val;
-  h.previousElementSibling.querySelectorAll('.toggle-btn').forEach(b => b.classList.toggle('active', b.dataset.val===val));
-}
-function setResultVal(val) {
-  document.getElementById('f-result').value = val;
-  document.querySelectorAll('.result-btn').forEach(b => b.classList.toggle('active', b.dataset.val===val));
+function authMsg(id,msg,type){ const el=document.getElementById(id); el.textContent=msg; el.className="auth-msg "+type; el.style.display="block"; setTimeout(()=>el.style.display="none",3500); }
+
+function switchAuthTab(tab){
+  document.querySelectorAll(".auth-tab").forEach((b,i)=>b.classList.toggle("active",(i===0&&tab==="login")||(i===1&&tab==="register")));
+  document.getElementById("form-login").classList.toggle("active",tab==="login");
+  document.getElementById("form-register").classList.toggle("active",tab==="register");
 }
 
-// ─── IMAGE ────────────────────────────────────────────────────────────────
-function handleImg(e) {
-  const file = e.target.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    const img = new Image();
-    img.onload = () => {
-      let w=img.width,h=img.height,max=1200;
+function doRegister(){
+  const name=document.getElementById("reg-name").value.trim();
+  const user=document.getElementById("reg-user").value.trim().toLowerCase();
+  const email=document.getElementById("reg-email").value.trim();
+  const pass=document.getElementById("reg-pass").value;
+  const pass2=document.getElementById("reg-pass2").value;
+  if(!name||!user||!pass) return authMsg("reg-msg","Completa todos los campos.","err");
+  if(pass.length<4) return authMsg("reg-msg","Minimo 4 caracteres.","err");
+  if(pass!==pass2)  return authMsg("reg-msg","Las contrasenas no coinciden.","err");
+  if(!/^[a-z0-9_]+$/.test(user)) return authMsg("reg-msg","Usuario: solo letras, numeros y _.","err");
+  const users=getLocalUsers();
+  if(users[user]) return authMsg("reg-msg","Ese usuario ya existe.","err");
+  users[user]={name,email:email||"",hash:hashPass(pass),created:new Date().toISOString()};
+  saveLocalUsers(users);
+  authMsg("reg-msg","Cuenta creada!","ok");
+  renderUserChips();
+  setTimeout(()=>switchAuthTab("login"),1500);
+}
+
+async function doLogin(){
+  const user=document.getElementById("login-user").value.trim().toLowerCase();
+  const pass=document.getElementById("login-pass").value;
+  if(!user||!pass) return authMsg("login-msg","Ingresa usuario y contrasena.","err");
+  const users=getLocalUsers();
+  if(!users[user]) return authMsg("login-msg","Usuario no encontrado.","err");
+  if(users[user].hash!==hashPass(pass)) return authMsg("login-msg","Contrasena incorrecta.","err");
+  document.getElementById("loading").classList.remove("hidden");
+  localStorage.setItem(SESSION_KEY,user);
+  setSyncStatus("ing","cargando...");
+  try {
+    const result = await ghRead(user);
+    _trades = result.trades;
+    _sha    = result.sha;
+    setSyncStatus("ok","☁ guardado");
+  } catch(e) {
+    _trades = JSON.parse(localStorage.getItem("tradelog_data_"+user)||"[]");
+    setSyncStatus("err","sin conexion");
+  }
+  _currentUser = user;
+  startSession(user, users[user].name, users[user].email||"");
+}
+
+function quickLogin(u){ document.getElementById("login-user").value=u; document.getElementById("login-pass").focus(); switchAuthTab("login"); }
+
+function showAuthScreen(){ document.getElementById("auth-screen").style.display="flex"; document.getElementById("app").style.display="none"; renderUserChips(); }
+
+function startSession(uid,displayName,email){
+  document.getElementById("loading").classList.add("hidden");
+  document.getElementById("auth-screen").style.display="none";
+  document.getElementById("app").style.display="block";
+  document.getElementById("topbar-avatar").textContent=displayName.charAt(0).toUpperCase();
+  document.getElementById("topbar-name").textContent=displayName;
+  document.getElementById("topbar-meta").textContent=_trades.length+" trades";
+  document.getElementById("f-date").value=new Date().toISOString().slice(0,10);
+  showPage("dash",document.querySelector(".nav-btn"));
+}
+
+function doLogout(){
+  localStorage.removeItem(SESSION_KEY);
+  _currentUser=null; _trades=[]; _sha=null;
+  showAuthScreen();
+}
+
+function renderUserChips(){
+  const users=getLocalUsers(); const keys=Object.keys(users);
+  const sec=document.getElementById("users-section");
+  if(!keys.length){sec.style.display="none";return;}
+  sec.style.display="block";
+  document.getElementById("users-chips").innerHTML=keys.map(u=>
+    `<span class="user-chip" onclick="quickLogin('${u}')"><span class="user-avatar">${users[u].name.charAt(0).toUpperCase()}</span><span class="user-chip-name">${users[u].name}</span></span>`).join("");
+}
+
+async function syncToGitHub(){
+  if(!_currentUser) return;
+  setSyncStatus("ing","guardando...");
+  localStorage.setItem("tradelog_data_"+_currentUser, JSON.stringify(_trades));
+  try {
+    _sha = await ghWrite(_currentUser, _trades, _sha);
+    setSyncStatus("ok","☁ guardado");
+  } catch(e){
+    setSyncStatus("err","error al guardar");
+  }
+}
+
+// ── Nav ────────────────────────────────────────────────────────────────────
+function showPage(id,btn){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
+  document.getElementById("page-"+id).classList.add("active");
+  if(btn)btn.classList.add("active");
+  if(id==="dash")renderDash();
+  if(id==="list")renderList();
+}
+
+// ── Form ───────────────────────────────────────────────────────────────────
+function setToggle(group,btn){ btn.closest(".toggle-group").querySelectorAll(".toggle-btn").forEach(b=>b.classList.remove("active")); btn.classList.add("active"); document.getElementById("f-"+group).value=btn.dataset.val; }
+function setResult(btn){ document.querySelectorAll(".result-btn").forEach(b=>b.classList.remove("active")); btn.classList.add("active"); document.getElementById("f-result").value=btn.dataset.val; }
+function setToggleVal(group,val){ const h=document.getElementById("f-"+group); h.value=val; h.previousElementSibling.querySelectorAll(".toggle-btn").forEach(b=>b.classList.toggle("active",b.dataset.val===val)); }
+function setResultVal(val){ document.getElementById("f-result").value=val; document.querySelectorAll(".result-btn").forEach(b=>b.classList.toggle("active",b.dataset.val===val)); }
+
+function handleImg(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    const img=new Image();
+    img.onload=()=>{
+      let w=img.width,h=img.height,max=900;
       if(w>max||h>max){const r=Math.min(max/w,max/h);w=Math.round(w*r);h=Math.round(h*r);}
-      const c=document.createElement('canvas');c.width=w;c.height=h;
-      c.getContext('2d').drawImage(img,0,0,w,h);
-      pendingImg=c.toDataURL('image/jpeg',0.75);
-      document.getElementById('img-preview').src=pendingImg;
-      document.getElementById('img-preview-wrap').style.display='block';
-      document.getElementById('img-placeholder').style.display='none';
+      const c=document.createElement("canvas");c.width=w;c.height=h;
+      c.getContext("2d").drawImage(img,0,0,w,h);
+      pendingImg=c.toDataURL("image/jpeg",0.65);
+      document.getElementById("img-preview").src=pendingImg;
+      document.getElementById("img-preview-wrap").style.display="block";
+      document.getElementById("img-placeholder").style.display="none";
     };
     img.src=ev.target.result;
   };
   reader.readAsDataURL(file);
 }
-function clearImg() {
-  pendingImg=null; document.getElementById('f-img').value='';
-  document.getElementById('img-preview-wrap').style.display='none';
-  document.getElementById('img-placeholder').style.display='block';
-}
-function openModal(src){document.getElementById('modal-img').src=src;document.getElementById('img-modal').classList.add('open');}
-function closeModal(){document.getElementById('img-modal').classList.remove('open');}
+function clearImg(){ pendingImg=null; document.getElementById("f-img").value=""; document.getElementById("img-preview-wrap").style.display="none"; document.getElementById("img-placeholder").style.display="block"; }
+function openModal(src){ document.getElementById("modal-img").src=src; document.getElementById("img-modal").classList.add("open"); }
+function closeModal(){ document.getElementById("img-modal").classList.remove("open"); }
+function flash(msg,type){ const el=document.getElementById("flash"); el.textContent=msg; el.className="flash "+type; el.style.display="block"; setTimeout(()=>el.style.display="none",2500); }
 
-// ─── TRADES ───────────────────────────────────────────────────────────────
-function flash(msg,type){
-  const el=document.getElementById('flash');
-  el.textContent=msg;el.className='flash '+type;el.style.display='block';
-  setTimeout(()=>el.style.display='none',2500);
-}
-
-function submitTrade() {
-  const date=document.getElementById('f-date').value;
-  const pts=document.getElementById('f-pts').value;
-  if(!date||pts===''){flash('Completa fecha y puntos.','err');return;}
-  const record={date,session:document.getElementById('f-session').value,dir:document.getElementById('f-dir').value,result:document.getElementById('f-result').value,entry:document.getElementById('f-entry').value,pts:parseFloat(pts),notes:document.getElementById('f-notes').value,img:pendingImg||null};
-  const idx=parseInt(document.getElementById('edit-idx').value);
-  if(idx>=0){window._trades[idx]=record;flash('Trade actualizado.','ok');}
-  else{window._trades.push(record);flash('Trade guardado.','ok');}
-  saveUserTrades(window._currentUser, window._trades);
-  cancelEdit();clearImg();
-  document.getElementById('f-pts').value='';
-  document.getElementById('f-entry').value='';
-  document.getElementById('f-notes').value='';
-  document.getElementById('topbar-meta').textContent=window._trades.length+' trades';
+async function submitTrade(){
+  const date=document.getElementById("f-date").value;
+  const pts=document.getElementById("f-pts").value;
+  if(!date||pts===""){flash("Completa fecha y puntos.","err");return;}
+  const record={date,session:document.getElementById("f-session").value,dir:document.getElementById("f-dir").value,result:document.getElementById("f-result").value,entry:document.getElementById("f-entry").value,pts:parseFloat(pts),notes:document.getElementById("f-notes").value,img:pendingImg||null};
+  const idx=parseInt(document.getElementById("edit-idx").value);
+  if(idx>=0){ _trades[idx]=record; flash("Trade actualizado.","ok"); }
+  else { _trades.push(record); flash("Trade guardado.","ok"); }
+  document.getElementById("topbar-meta").textContent=_trades.length+" trades";
+  cancelEdit(); clearImg();
+  document.getElementById("f-pts").value="";
+  document.getElementById("f-entry").value="";
+  document.getElementById("f-notes").value="";
+  await syncToGitHub();
 }
 
 function editTrade(i){
-  const t=window._trades[i];
-  document.getElementById('edit-idx').value=i;
-  document.getElementById('f-date').value=t.date;
-  document.getElementById('f-entry').value=t.entry||'';
-  document.getElementById('f-pts').value=t.pts;
-  document.getElementById('f-notes').value=t.notes||'';
-  setToggleVal('session',t.session);setToggleVal('dir',t.dir);setResultVal(t.result);
-  if(t.img){pendingImg=t.img;document.getElementById('img-preview').src=t.img;document.getElementById('img-preview-wrap').style.display='block';document.getElementById('img-placeholder').style.display='none';}
+  const t=_trades[i];
+  document.getElementById("edit-idx").value=i;
+  document.getElementById("f-date").value=t.date;
+  document.getElementById("f-entry").value=t.entry||"";
+  document.getElementById("f-pts").value=t.pts;
+  document.getElementById("f-notes").value=t.notes||"";
+  setToggleVal("session",t.session); setToggleVal("dir",t.dir); setResultVal(t.result);
+  if(t.img){pendingImg=t.img;document.getElementById("img-preview").src=t.img;document.getElementById("img-preview-wrap").style.display="block";document.getElementById("img-placeholder").style.display="none";}
   else clearImg();
-  document.getElementById('form-title').textContent='Editar trade';
-  document.getElementById('btn-submit').textContent='Guardar cambios';
-  document.getElementById('btn-submit').classList.add('edit-mode');
-  document.getElementById('edit-banner').classList.remove('hidden');
-  showPage('add',document.querySelectorAll('.nav-btn')[1]);
+  document.getElementById("form-title").textContent="Editar trade";
+  document.getElementById("btn-submit").textContent="Guardar cambios";
+  document.getElementById("btn-submit").classList.add("edit-mode");
+  document.getElementById("edit-banner").classList.remove("hidden");
+  showPage("add",document.querySelectorAll(".nav-btn")[1]);
   window.scrollTo(0,0);
 }
 
-function cancelEdit(){
-  document.getElementById('edit-idx').value=-1;
-  document.getElementById('form-title').textContent='Nuevo trade';
-  document.getElementById('btn-submit').textContent='Agregar trade';
-  document.getElementById('btn-submit').classList.remove('edit-mode');
-  document.getElementById('edit-banner').classList.add('hidden');
-}
+function cancelEdit(){ document.getElementById("edit-idx").value=-1; document.getElementById("form-title").textContent="Nuevo trade"; document.getElementById("btn-submit").textContent="Agregar trade"; document.getElementById("btn-submit").classList.remove("edit-mode"); document.getElementById("edit-banner").classList.add("hidden"); }
 
-function deleteTrade(i){
-  if(!confirm('Eliminar este trade?'))return;
-  window._trades.splice(i,1);
-  saveUserTrades(window._currentUser,window._trades);
-  document.getElementById('topbar-meta').textContent=window._trades.length+' trades';
+async function deleteTrade(i){
+  if(!confirm("Eliminar este trade?"))return;
+  _trades.splice(i,1);
+  document.getElementById("topbar-meta").textContent=_trades.length+" trades";
   renderList();
+  await syncToGitHub();
 }
 
 function exportData(){
-  const blob=new Blob([JSON.stringify(window._trades,null,2)],{type:'application/json'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='tradelog_'+window._currentUser+'_'+new Date().toISOString().slice(0,10)+'.json';
-  a.click();
+  const blob=new Blob([JSON.stringify(_trades,null,2)],{type:"application/json"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+  a.download="tradelog_"+_currentUser+"_"+new Date().toISOString().slice(0,10)+".json"; a.click();
 }
-function importData(e){
+async function importData(e){
   const file=e.target.files[0];if(!file)return;
   const reader=new FileReader();
-  reader.onload=ev=>{
+  reader.onload=async ev=>{
     try{
       const imp=JSON.parse(ev.target.result);if(!Array.isArray(imp))throw new Error();
-      const ex=new Set(window._trades.map(t=>t.date+t.session+t.dir+t.pts));
+      const existing=new Set(_trades.map(t=>t.date+t.session+t.dir+t.pts));
       let added=0;
-      for(const t of imp){const k=t.date+t.session+t.dir+t.pts;if(!ex.has(k)){window._trades.push(t);ex.add(k);added++;}}
-      saveUserTrades(window._currentUser,window._trades);renderList();
-      document.getElementById('topbar-meta').textContent=window._trades.length+' trades';
-      alert(added+' trades importados. Total: '+window._trades.length);
-    }catch{alert('Error: archivo invalido.');}
+      for(const t of imp){const k=t.date+t.session+t.dir+t.pts;if(!existing.has(k)){_trades.push(t);existing.add(k);added++;}}
+      document.getElementById("topbar-meta").textContent=_trades.length+" trades";
+      renderList(); await syncToGitHub();
+      alert(added+" trades importados. Total: "+_trades.length);
+    }catch(err){alert("Error: "+err.message);}
   };
-  reader.readAsText(file);e.target.value='';
+  reader.readAsText(file); e.target.value="";
 }
 
-// ─── STATS ────────────────────────────────────────────────────────────────
-function statsFor(arr){
-  const total=arr.length,wins=arr.filter(t=>t.result==='WIN').length;
-  const pts=arr.reduce((s,t)=>s+(parseFloat(t.pts)||0),0);
-  return{total,wins,losses:total-wins,pts:parseFloat(pts.toFixed(1)),wr:total?Math.round(wins/total*100):0};
-}
+// ── Stats / Render ─────────────────────────────────────────────────────────
+function statsFor(arr){ const total=arr.length,wins=arr.filter(t=>t.result==="WIN").length,pts=arr.reduce((s,t)=>s+(parseFloat(t.pts)||0),0); return{total,wins,losses:total-wins,pts:parseFloat(pts.toFixed(1)),wr:total?Math.round(wins/total*100):0}; }
 
 function renderDash(){
-  const all=statsFor(window._trades),ny=statsFor(window._trades.filter(t=>t.session==='NY')),ld=statsFor(window._trades.filter(t=>t.session==='LD'));
-  document.getElementById('dash-subtitle').textContent=all.total?all.total+' trades registrados':'Sin trades aun';
-  const pc=all.pts>=0?'green':'red',wc=all.wr>=50?'green':'red';
-  document.getElementById('stats-grid').innerHTML=`
-    <div class="stat-card"><div class="stat-label">Trades</div><div class="stat-value blue">${all.total}</div></div>
-    <div class="stat-card"><div class="stat-label">Winrate</div><div class="stat-value ${wc}">${all.total?all.wr+'%':'--'}</div></div>
-    <div class="stat-card"><div class="stat-label">Pts netos</div><div class="stat-value ${pc}">${all.total?(all.pts>=0?'+':'')+all.pts:'--'}</div></div>
-    <div class="stat-card"><div class="stat-label">W / L</div><div class="stat-value mono" style="font-size:20px;">${all.wins}<span style="color:var(--text3)"> / </span>${all.losses}</div></div>`;
-  function sc(cls,name,s,col){
-    const wc2=s.wr>=50?col:'var(--red)',pc2=s.pts>=0?'var(--green)':'var(--red)';
-    return`<div class="session-card ${cls}"><div class="session-name">${name}</div><div class="session-wr" style="color:${wc2};">${s.total?s.wr+'%':'--'}</div><div class="session-pts" style="color:${pc2};">${s.total?(s.pts>=0?'+':'')+s.pts+' pts':'--'}</div><div class="session-detail">${s.wins}W · ${s.losses}L de ${s.total}</div></div>`;
-  }
-  document.getElementById('session-row').innerHTML=sc('ny','Sesion NY',ny,'var(--blue)')+sc('ld','Londres',ld,'var(--yellow)');
+  const all=statsFor(_trades),ny=statsFor(_trades.filter(t=>t.session==="NY")),ld=statsFor(_trades.filter(t=>t.session==="LD"));
+  document.getElementById("dash-subtitle").textContent=all.total?all.total+" trades registrados":"Sin trades aun";
+  const pc=all.pts>=0?"green":"red",wc=all.wr>=50?"green":"red";
+  document.getElementById("stats-grid").innerHTML=`<div class="stat-card"><div class="stat-label">Trades</div><div class="stat-value blue">${all.total}</div></div><div class="stat-card"><div class="stat-label">Winrate</div><div class="stat-value ${wc}">${all.total?all.wr+"%":"--"}</div></div><div class="stat-card"><div class="stat-label">Pts netos</div><div class="stat-value ${pc}">${all.total?(all.pts>=0?"+":"")+all.pts:"--"}</div></div><div class="stat-card"><div class="stat-label">W / L</div><div class="stat-value mono" style="font-size:20px;">${all.wins}<span style="color:var(--text3)"> / </span>${all.losses}</div></div>`;
+  function sc(cls,name,s,col){const wc2=s.wr>=50?col:"var(--red)",pc2=s.pts>=0?"var(--green)":"var(--red)";return`<div class="session-card ${cls}"><div class="session-name">${name}</div><div class="session-wr" style="color:${wc2};">${s.total?s.wr+"%":"--"}</div><div class="session-pts" style="color:${pc2};">${s.total?(s.pts>=0?"+":"")+s.pts+" pts":"--"}</div><div class="session-detail">${s.wins}W · ${s.losses}L de ${s.total}</div></div>`;}
+  document.getElementById("session-row").innerHTML=sc("ny","Sesion NY",ny,"var(--blue)")+sc("ld","Londres",ld,"var(--yellow)");
   if(chartInst)chartInst.destroy();
-  const sorted=[...window._trades].sort((a,b)=>a.date.localeCompare(b.date));
+  const sorted=[..._trades].sort((a,b)=>a.date.localeCompare(b.date));
   if(!sorted.length)return;
   let cum=0;
-  const color=all.pts>=0?'#00e676':'#ff4444';
-  chartInst=new Chart(document.getElementById('chart'),{type:'line',
-    data:{labels:sorted.map(t=>t.date.slice(5)),datasets:[{data:sorted.map(t=>{cum+=parseFloat(t.pts)||0;return parseFloat(cum.toFixed(1));}),borderColor:color,backgroundColor:color+'18',borderWidth:2,pointRadius:3,fill:true,tension:0.3}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-      scales:{y:{grid:{color:'rgba(255,255,255,0.06)'},ticks:{color:'#555568',font:{family:'Space Mono',size:10}}},
-        x:{grid:{display:false},ticks:{color:'#555568',maxRotation:45,autoSkip:true,maxTicksLimit:8,font:{family:'Space Mono',size:10}}}}}});
+  const color=all.pts>=0?"#00e676":"#ff4444";
+  chartInst=new Chart(document.getElementById("chart"),{type:"line",data:{labels:sorted.map(t=>t.date.slice(5)),datasets:[{data:sorted.map(t=>{cum+=parseFloat(t.pts)||0;return parseFloat(cum.toFixed(1));}),borderColor:color,backgroundColor:color+"18",borderWidth:2,pointRadius:3,fill:true,tension:0.3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{grid:{color:"rgba(255,255,255,0.06)"},ticks:{color:"#555568",font:{family:"Space Mono",size:10}}},x:{grid:{display:false},ticks:{color:"#555568",maxRotation:45,autoSkip:true,maxTicksLimit:8,font:{family:"Space Mono",size:10}}}}}});
 }
 
 function renderList(){
-  const sorted=[...window._trades].map((t,i)=>({...t,_i:i})).sort((a,b)=>b.date.localeCompare(a.date));
-  const el=document.getElementById('trades-list');
-  if(!sorted.length){el.innerHTML='<div class="empty"><div class="empty-icon">📋</div><p>Sin trades aun.</p></div>';return;}
+  const sorted=[..._trades].map((t,i)=>({...t,_i:i})).sort((a,b)=>b.date.localeCompare(a.date));
+  const el=document.getElementById("trades-list");
+  if(!sorted.length){el.innerHTML="<div class='empty'><div class='empty-icon'>📋</div><p>Sin trades aun.</p></div>";return;}
   el.innerHTML=sorted.map(t=>{
-    const isWin=t.result==='WIN',pts=parseFloat(t.pts)||0;
-    const imgTag=t.img?`<br><img src="${t.img}" class="trade-thumb" onclick="openModal('${t.img}')">`:'' ;
-    const notesTag=(t.notes||t.img)?`<div class="trade-notes">${t.notes||''}${imgTag}</div>`:'';
-    return`<div class="trade-item">
-      <div class="trade-top"><div><div class="trade-date mono">${t.date}</div><div class="trade-session">${t.session} · ${t.dir==='LONG'?'Compra':'Venta'}${t.entry?' · @'+parseFloat(t.entry).toFixed(2):''}</div></div><span class="trade-badge ${isWin?'badge-win':'badge-loss'}">${isWin?'Win':'Loss'}</span></div>
-      <div class="trade-mid"><div></div><div class="trade-pts ${pts>=0?'pos':'neg'}">${(pts>=0?'+':'')+pts.toFixed(1)} pts</div></div>
-      ${notesTag}
-      <div class="trade-actions"><button class="action-btn edit" onclick="editTrade(${t._i})">Editar</button><button class="action-btn del" onclick="deleteTrade(${t._i})">Eliminar</button></div>
-    </div>`;
-  }).join('');
+    const isWin=t.result==="WIN",pts=parseFloat(t.pts)||0;
+    const imgTag=t.img?`<br><img src="${t.img}" class="trade-thumb" onclick="openModal('${t.img}')">`:"";
+    const notesTag=(t.notes||t.img)?`<div class="trade-notes">${t.notes||""}${imgTag}</div>`:"";
+    return`<div class="trade-item"><div class="trade-top"><div><div class="trade-date mono">${t.date}</div><div class="trade-session">${t.session} · ${t.dir==="LONG"?"Compra":"Venta"}${t.entry?" · @"+parseFloat(t.entry).toFixed(2):""}</div></div><span class="trade-badge ${isWin?"badge-win":"badge-loss"}">${isWin?"Win":"Loss"}</span></div><div class="trade-mid"><div></div><div class="trade-pts ${pts>=0?"pos":"neg"}">${(pts>=0?"+":"")+pts.toFixed(1)} pts</div></div>${notesTag}<div class="trade-actions"><button class="action-btn edit" onclick="editTrade(${t._i})">Editar</button><button class="action-btn del" onclick="deleteTrade(${t._i})">Eliminar</button></div></div>`;
+  }).join("");
 }
+
+init();
 </script>
 </body>
 </html>
