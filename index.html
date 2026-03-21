@@ -350,35 +350,38 @@ function setSyncStatus(state, text){
 }
 
 async function init() {
-  // Check if token is configured
+  // Always hide loading and show auth/token screen immediately
+  // Never block UI waiting for network
+  document.getElementById("loading").classList.add("hidden");
+
   if (!getToken()) {
-    document.getElementById("loading").classList.add("hidden");
     document.getElementById("token-screen").style.display = "flex";
     return;
   }
-  document.getElementById("loading").classList.remove("hidden");
-  document.getElementById("auth-screen").style.display = "none";
-  document.getElementById("app").style.display = "none";
+
   const saved = localStorage.getItem(SESSION_KEY);
   if (saved) {
     const users = getLocalUsers();
     if (users[saved]) {
-      setSyncStatus("ing","cargando...");
-      try {
-        const result = await ghRead(saved);
-        _trades = result.trades;
-        _sha    = result.sha;
-        setSyncStatus("ok","☁ guardado");
-      } catch(e) {
-        _trades = JSON.parse(localStorage.getItem("tradelog_data_"+saved)||"[]");
-        setSyncStatus("err","sin conexion");
-      }
+      // Load from localStorage immediately - no waiting
+      _trades = JSON.parse(localStorage.getItem("tradelog_data_"+saved)||"[]");
       _currentUser = saved;
       startSession(saved, users[saved].name, users[saved].email||"");
+      // Sync from GitHub in background
+      setSyncStatus("ing","sincronizando...");
+      ghRead(saved).then(result => {
+        _trades = result.trades;
+        _sha = result.sha;
+        localStorage.setItem("tradelog_data_"+saved, JSON.stringify(_trades));
+        setSyncStatus("ok","☁ guardado");
+        document.getElementById("topbar-meta").textContent = _trades.length+" trades";
+        renderDash();
+      }).catch(() => {
+        setSyncStatus("err","sin conexion");
+      });
       return;
     }
   }
-  document.getElementById("loading").classList.add("hidden");
   showAuthScreen();
 }
 
@@ -416,20 +419,21 @@ async function doLogin(){
   const users=getLocalUsers();
   if(!users[user]) return authMsg("login-msg","Usuario no encontrado.","err");
   if(users[user].hash!==hashPass(pass)) return authMsg("login-msg","Contrasena incorrecta.","err");
-  document.getElementById("loading").classList.remove("hidden");
   localStorage.setItem(SESSION_KEY,user);
-  setSyncStatus("ing","cargando...");
-  try {
-    const result = await ghRead(user);
-    _trades = result.trades;
-    _sha    = result.sha;
-    setSyncStatus("ok","☁ guardado");
-  } catch(e) {
-    _trades = JSON.parse(localStorage.getItem("tradelog_data_"+user)||"[]");
-    setSyncStatus("err","sin conexion");
-  }
+  // Load local data immediately
+  _trades = JSON.parse(localStorage.getItem("tradelog_data_"+user)||"[]");
   _currentUser = user;
   startSession(user, users[user].name, users[user].email||"");
+  // Sync GitHub in background
+  setSyncStatus("ing","sincronizando...");
+  ghRead(user).then(result => {
+    _trades = result.trades;
+    _sha = result.sha;
+    localStorage.setItem("tradelog_data_"+user, JSON.stringify(_trades));
+    setSyncStatus("ok","☁ guardado");
+    document.getElementById("topbar-meta").textContent = _trades.length+" trades";
+    renderDash();
+  }).catch(() => setSyncStatus("err","sin conexion"));
 }
 
 function quickLogin(u){ document.getElementById("login-user").value=u; document.getElementById("login-pass").focus(); switchAuthTab("login"); }
