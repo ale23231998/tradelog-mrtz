@@ -277,9 +277,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 // ── CONFIG ─────────────────────────────────────────────────────────────────
-const GH_TOKEN = "";
 const GH_OWNER = "ale23231998";
 const GH_REPO  = "tradelog-mrtz";
+function getToken() { return localStorage.getItem("tradelog_gh_token") || ""; }
 const GH_API   = "https://api.github.com";
 
 // ── GitHub DB helpers ──────────────────────────────────────────────────────
