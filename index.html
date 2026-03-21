@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="TradeLogMRTZ">
 <meta name="theme-color" content="#0a0a0f">
@@ -210,6 +210,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="page-header" style="margin-top:12px;"><h1>Dashboard</h1><p id="dash-subtitle">Cargando...</p></div>
     <div class="stats-grid" id="stats-grid"></div>
     <div class="session-row" id="session-row"></div>
+    <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin:4px 0 8px;">Estrategias</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;" id="strat-row"></div>
     <div class="card"><div class="stat-label" style="margin-bottom:10px;">P&L acumulado</div><div class="chart-wrap"><canvas id="chart"></canvas></div></div>
   </div>
 
@@ -230,6 +232,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="form-group"><label class="form-label">Resultado</label>
       <div class="result-group"><button class="result-btn win active" data-val="WIN" onclick="setResult(this)">Win</button><button class="result-btn loss" data-val="LOSS" onclick="setResult(this)">Loss</button></div>
       <input type="hidden" id="f-result" value="WIN">
+    </div>
+    <div class="form-group"><label class="form-label">Estrategia</label>
+      <div class="toggle-group" style="flex-direction:column;gap:3px;">
+        <button class="toggle-btn active" data-val="IFVG" onclick="setToggle('strat',this)" style="border-radius:6px;">Mi asistente IFVG V3</button>
+        <button class="toggle-btn" data-val="MRTZ" onclick="setToggle('strat',this)" style="border-radius:6px;">Mi asistenteMRTZ</button>
+        <button class="toggle-btn" data-val="P1" onclick="setToggle('strat',this)" style="border-radius:6px;">Prueba1</button>
+      </div>
+      <input type="hidden" id="f-strat" value="IFVG">
     </div>
     <div class="form-grid">
       <div class="form-group"><label class="form-label">Entrada</label><input type="number" id="f-entry" class="form-input" placeholder="21050.25"></div>
@@ -267,32 +277,40 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 // ── CONFIG ─────────────────────────────────────────────────────────────────
+const GH_TOKEN = "";
 const GH_OWNER = "ale23231998";
 const GH_REPO  = "tradelog-mrtz";
 const GH_API   = "https://api.github.com";
-
-// ── CORRECCIÓN: getToken() lee el token guardado en localStorage ───────────
-function getToken() {
-  return localStorage.getItem("tradelog_gh_token") || "";
-}
 
 // ── GitHub DB helpers ──────────────────────────────────────────────────────
 function ghPath(username) { return "data/" + username + ".json"; }
 
 async function ghRead(username) {
   const url = GH_API+"/repos/"+GH_OWNER+"/"+GH_REPO+"/contents/"+ghPath(username);
-  const r = await fetch(url, { headers: { Authorization: "token "+getToken(), Accept: "application/vnd.github.v3+json" }});
-  if (r.status === 404) return { trades: [], sha: null };
-  const d = await r.json();
-  const content = JSON.parse(atob(d.content.replace(/\n/g,'')));
-  return { trades: content.trades || [], sha: d.sha };
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+  try {
+    const r = await fetch(url, {
+      signal: controller.signal,
+      headers: { Authorization: "token "+getToken(), Accept: "application/vnd.github.v3+json" }
+    });
+    clearTimeout(timeout);
+    if (r.status === 404) return { trades: [], sha: null };
+    if (!r.ok) throw new Error("HTTP "+r.status);
+    const d = await r.json();
+    if (!d.content) return { trades: [], sha: null };
+    const parsed = JSON.parse(atob(d.content.replace(/\n/g,"")));
+    return { trades: parsed.trades || [], sha: d.sha };
+  } catch(e) {
+    clearTimeout(timeout);
+    throw e;
+  }
 }
 
 async function ghWrite(username, trades, sha) {
   const url = GH_API+"/repos/"+GH_OWNER+"/"+GH_REPO+"/contents/"+ghPath(username);
-  // CORRECCIÓN: usar getToken() en lugar de la constante vacía GH_TOKEN
   const body = { message: "trades:"+username+":"+Date.now(), content: btoa(unescape(encodeURIComponent(JSON.stringify({trades})))), ...(sha ? {sha} : {}) };
-  const r = await fetch(url, { method:"PUT", headers:{ Authorization:"token "+getToken(), Accept:"application/vnd.github.v3+json", "Content-Type":"application/json" }, body: JSON.stringify(body) });
+  const r = await fetch(url, { method:"PUT", headers:{ Authorization:"token "+GH_TOKEN, Accept:"application/vnd.github.v3+json", "Content-Type":"application/json" }, body: JSON.stringify(body) });
   if (!r.ok) throw new Error("GitHub write error: " + r.status);
   const d = await r.json();
   return d.content.sha;
@@ -307,6 +325,7 @@ let _sha         = null;
 let pendingImg   = null;
 let chartInst    = null;
 
+
 function saveToken() {
   const t = document.getElementById("token-input").value.trim();
   if (!t.startsWith("ghp_") && !t.startsWith("github_pat_")) {
@@ -316,9 +335,8 @@ function saveToken() {
   }
   localStorage.setItem("tradelog_gh_token", t);
   document.getElementById("token-screen").style.display = "none";
-  document.getElementById("loading").classList.remove("hidden");
-  showAuthScreen();
-  document.getElementById("loading").classList.add("hidden");
+  // Run full init now that token is set
+  init();
 }
 
 function getLocalUsers() { try{return JSON.parse(localStorage.getItem(USERS_KEY)||"{}");}catch(e){return{};} }
@@ -332,11 +350,15 @@ function setSyncStatus(state, text){
 }
 
 async function init() {
+  // Check if token is configured
   if (!getToken()) {
     document.getElementById("loading").classList.add("hidden");
     document.getElementById("token-screen").style.display = "flex";
     return;
   }
+  document.getElementById("loading").classList.remove("hidden");
+  document.getElementById("auth-screen").style.display = "none";
+  document.getElementById("app").style.display = "none";
   const saved = localStorage.getItem(SESSION_KEY);
   if (saved) {
     const users = getLocalUsers();
@@ -496,7 +518,7 @@ async function submitTrade(){
   const date=document.getElementById("f-date").value;
   const pts=document.getElementById("f-pts").value;
   if(!date||pts===""){flash("Completa fecha y puntos.","err");return;}
-  const record={date,session:document.getElementById("f-session").value,dir:document.getElementById("f-dir").value,result:document.getElementById("f-result").value,entry:document.getElementById("f-entry").value,pts:parseFloat(pts),notes:document.getElementById("f-notes").value,img:pendingImg||null};
+  const record={date,session:document.getElementById("f-session").value,dir:document.getElementById("f-dir").value,result:document.getElementById("f-result").value,strat:document.getElementById("f-strat").value||"IFVG",entry:document.getElementById("f-entry").value,pts:parseFloat(pts),notes:document.getElementById("f-notes").value,img:pendingImg||null};
   const idx=parseInt(document.getElementById("edit-idx").value);
   if(idx>=0){ _trades[idx]=record; flash("Trade actualizado.","ok"); }
   else { _trades.push(record); flash("Trade guardado.","ok"); }
@@ -515,7 +537,7 @@ function editTrade(i){
   document.getElementById("f-entry").value=t.entry||"";
   document.getElementById("f-pts").value=t.pts;
   document.getElementById("f-notes").value=t.notes||"";
-  setToggleVal("session",t.session); setToggleVal("dir",t.dir); setResultVal(t.result);
+  setToggleVal("session",t.session); setToggleVal("dir",t.dir); setResultVal(t.result); setToggleVal("strat",t.strat||"IFVG");
   if(t.img){pendingImg=t.img;document.getElementById("img-preview").src=t.img;document.getElementById("img-preview-wrap").style.display="block";document.getElementById("img-placeholder").style.display="none";}
   else clearImg();
   document.getElementById("form-title").textContent="Editar trade";
@@ -568,6 +590,27 @@ function renderDash(){
   document.getElementById("stats-grid").innerHTML=`<div class="stat-card"><div class="stat-label">Trades</div><div class="stat-value blue">${all.total}</div></div><div class="stat-card"><div class="stat-label">Winrate</div><div class="stat-value ${wc}">${all.total?all.wr+"%":"--"}</div></div><div class="stat-card"><div class="stat-label">Pts netos</div><div class="stat-value ${pc}">${all.total?(all.pts>=0?"+":"")+all.pts:"--"}</div></div><div class="stat-card"><div class="stat-label">W / L</div><div class="stat-value mono" style="font-size:20px;">${all.wins}<span style="color:var(--text3)"> / </span>${all.losses}</div></div>`;
   function sc(cls,name,s,col){const wc2=s.wr>=50?col:"var(--red)",pc2=s.pts>=0?"var(--green)":"var(--red)";return`<div class="session-card ${cls}"><div class="session-name">${name}</div><div class="session-wr" style="color:${wc2};">${s.total?s.wr+"%":"--"}</div><div class="session-pts" style="color:${pc2};">${s.total?(s.pts>=0?"+":"")+s.pts+" pts":"--"}</div><div class="session-detail">${s.wins}W · ${s.losses}L de ${s.total}</div></div>`;}
   document.getElementById("session-row").innerHTML=sc("ny","Sesion NY",ny,"var(--blue)")+sc("ld","Londres",ld,"var(--yellow)");
+
+  // Strategy stats
+  const ifvg = statsFor(_trades.filter(t=>t.strat==="IFVG"||!t.strat));
+  const mrtz  = statsFor(_trades.filter(t=>t.strat==="MRTZ"));
+  const p1    = statsFor(_trades.filter(t=>t.strat==="P1"));
+  function stratCard(name,s,col){
+    const wc=s.wr>=50?col:"var(--red)",pc=s.pts>=0?"var(--green)":"var(--red)";
+    return`<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px;">
+      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:${col};margin-bottom:8px;">${name}</div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;">
+        <div style="font-size:24px;font-weight:600;font-family:Space Mono,monospace;color:${wc};">${s.total?s.wr+"%":"--"}</div>
+        <div style="font-size:12px;font-weight:500;color:${pc};">${s.total?(s.pts>=0?"+":"")+s.pts+" pts":"--"}</div>
+      </div>
+      <div style="font-size:11px;color:var(--text3);margin-top:4px;">${s.wins}W · ${s.losses}L de ${s.total}</div>
+    </div>`;
+  }
+  document.getElementById("strat-row").innerHTML=
+    stratCard("IFVG V3",ifvg,"#a855f7")+
+    stratCard("MRTZ",mrtz,"#00e676")+
+    stratCard("Prueba1",p1,"#ffd740");
+
   if(chartInst)chartInst.destroy();
   const sorted=[..._trades].sort((a,b)=>a.date.localeCompare(b.date));
   if(!sorted.length)return;
